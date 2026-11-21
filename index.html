@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dave's Hand — Design | Estimate | Build</title>
+<style>
+  :root{
+    --navy:#0f2a43;--navy-2:#163a5c;--ink:#1b2430;--cyan:#2bb3c0;--cyan-d:#1d8e99;
+    --paper:#f5f7fa;--line:#dfe6ee;--muted:#5e6b7a;--white:#fff;--gold:#e0a43b;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+  h1,h2,h3{line-height:1.2;color:var(--navy)}
+  header{background:var(--navy);color:#fff;position:sticky;top:0;z-index:50;border-bottom:3px solid var(--cyan)}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;max-width:1080px;margin:0 auto}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.3px;font-size:18px}
+  .brand .mark{width:34px;height:34px;border:2px solid var(--cyan);border-radius:6px;display:grid;place-items:center;font-size:16px;color:var(--cyan);background:repeating-linear-gradient(45deg,transparent,transparent 5px,rgba(43,179,192,.12) 5px,rgba(43,179,192,.12) 6px)}
+  .brand small{display:block;font-weight:400;font-size:10.5px;color:#9fb6cc;letter-spacing:1.5px;text-transform:uppercase}
+  .nav a.cta{background:var(--cyan);color:#06222a;padding:9px 16px;border-radius:7px;text-decoration:none;font-weight:700;font-size:14px;white-space:nowrap}
+  .nav a.cta:hover{background:#fff}
+  /* hero split */
+  .hero{background:linear-gradient(rgba(15,42,67,.96),rgba(15,42,67,.96)),repeating-linear-gradient(0deg,transparent,transparent 38px,rgba(255,255,255,.05) 38px,rgba(255,255,255,.05) 39px),repeating-linear-gradient(90deg,transparent,transparent 38px,rgba(255,255,255,.05) 38px,rgba(255,255,255,.05) 39px),var(--navy);color:#fff;padding:56px 0}
+  .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center}
+  .hero .tag{display:inline-block;border:1px solid rgba(43,179,192,.5);color:var(--cyan);padding:5px 14px;border-radius:40px;font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-bottom:20px}
+  .hero h1{color:#fff;font-size:clamp(30px,4.6vw,44px);margin-bottom:12px}
+  .hero .triad{font-size:clamp(15px,2vw,18px);color:var(--cyan);font-weight:700;letter-spacing:2px;margin-bottom:18px}
+  .hero p{color:#cdd9e5;font-size:17px;max-width:520px;margin-bottom:28px}
+  .btn{display:inline-block;background:var(--cyan);color:#06222a;text-decoration:none;font-weight:700;padding:13px 26px;border-radius:9px;font-size:15.5px;border:none;cursor:pointer;transition:.15s}
+  .btn:hover{background:#fff;transform:translateY(-1px)}
+  .btn.ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.4);margin-left:10px}
+  .btn.ghost:hover{border-color:#fff;background:rgba(255,255,255,.08);color:#fff}
+  .portrait-wrap{position:relative;display:flex;justify-content:center}
+  .portrait{width:100%;max-width:330px;background:linear-gradient(180deg,#eef4f8,#dbe6ef);border-radius:18px;overflow:hidden;border:4px solid rgba(43,179,192,.5);box-shadow:0 20px 50px rgba(0,0,0,.35)}
+  .portrait img{width:100%;display:block}
+  .namecard{position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);background:#fff;border-radius:10px;padding:8px 18px;box-shadow:0 8px 24px rgba(0,0,0,.2);text-align:center;white-space:nowrap}
+  .namecard b{color:var(--navy);font-size:15px;display:block}
+  .namecard span{color:var(--cyan-d);font-size:11.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+  /* trust */
+  .trust{background:var(--navy-2);color:#cdd9e5;padding:16px 0}
+  .trust .wrap{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 34px;font-size:14px}
+  .trust b{color:var(--cyan)}
+  /* triad band */
+  .band{padding:56px 0}
+  .triad-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .tcard{border-radius:14px;overflow:hidden;background:#fff;border:1px solid var(--line);box-shadow:0 8px 24px rgba(15,42,67,.06)}
+  .tcard .ph{height:170px;overflow:hidden;position:relative}
+  .tcard .ph img{width:100%;height:100%;object-fit:cover;display:block}
+  .tcard .ph span{position:absolute;left:12px;bottom:10px;background:var(--navy);color:#fff;font-weight:700;font-size:12.5px;letter-spacing:1.5px;text-transform:uppercase;padding:5px 12px;border-radius:30px}
+  .tcard .tx{padding:16px 18px}
+  .tcard h3{font-size:16px;margin-bottom:5px}
+  .tcard p{color:var(--muted);font-size:13.5px}
+  section{padding:58px 0}
+  .eyebrow{color:var(--cyan-d);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;font-size:12.5px;text-align:center;margin-bottom:10px}
+  .sec-title{text-align:center;font-size:clamp(24px,3.4vw,32px);margin-bottom:12px}
+  .sec-sub{text-align:center;color:var(--muted);max-width:620px;margin:0 auto 42px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:26px 24px;transition:.15s;position:relative;overflow:hidden}
+  .card:hover{border-color:var(--cyan);box-shadow:0 10px 30px rgba(15,42,67,.08);transform:translateY(-2px)}
+  .card .ic{width:44px;height:44px;border-radius:9px;background:rgba(43,179,192,.12);color:var(--cyan-d);display:grid;place-items:center;font-size:22px;margin-bottom:16px}
+  .card h3{font-size:18px;margin-bottom:8px}
+  .card p{color:var(--muted);font-size:14.5px}
+  .card .chip{position:absolute;top:16px;right:16px;font-size:10.5px;font-weight:700;color:var(--gold);border:1px solid rgba(224,164,59,.4);padding:3px 8px;border-radius:30px;letter-spacing:.5px;text-transform:uppercase}
+  .how{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;margin-top:10px}
+  .step{text-align:center;padding:10px}
+  .step .n{width:52px;height:52px;border-radius:50%;background:var(--navy);color:#fff;font-weight:700;font-size:20px;display:grid;place-items:center;margin:0 auto 16px;border:3px solid var(--cyan)}
+  .step h3{font-size:17px;margin-bottom:6px}
+  .step p{color:var(--muted);font-size:14px}
+  .formwrap{max-width:720px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:16px;padding:34px;box-shadow:0 14px 40px rgba(15,42,67,.06)}
+  .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px 18px}
+  .field{display:flex;flex-direction:column;gap:6px}
+  .field.full{grid-column:1 / -1}
+  label{font-size:13.5px;font-weight:600;color:var(--navy)}
+  label .req{color:#d4604a}
+  input,select,textarea{font-family:inherit;font-size:15px;padding:11px 13px;border:1px solid var(--line);border-radius:9px;background:var(--paper);color:var(--ink);transition:.15s;width:100%}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--cyan);background:#fff;box-shadow:0 0 0 3px rgba(43,179,192,.14)}
+  textarea{resize:vertical;min-height:92px}
+  .submit-row{margin-top:24px;text-align:center}
+  .btn.block{width:100%;padding:15px}
+  .priv{font-size:12px;color:var(--muted);margin-top:14px;text-align:center}
+  #reveal{display:none;max-width:720px;margin:0 auto}
+  .reveal-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:34px;box-shadow:0 14px 40px rgba(15,42,67,.06)}
+  .reveal-head{text-align:center;margin-bottom:26px}
+  .reveal-head .check{width:60px;height:60px;border-radius:50%;background:rgba(43,179,192,.14);color:var(--cyan-d);display:grid;place-items:center;font-size:30px;margin:0 auto 14px}
+  .reveal-head h2{font-size:26px;margin-bottom:8px}
+  .reveal-head p{color:var(--muted)}
+  .pricetable{border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:8px 0 6px}
+  .prow{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:14px 18px;border-bottom:1px solid var(--line)}
+  .prow:last-child{border-bottom:none}
+  .prow:nth-child(even){background:var(--paper)}
+  .prow .svc{font-weight:600;color:var(--navy);font-size:14.5px}
+  .prow .svc small{display:block;font-weight:400;color:var(--muted);font-size:12.5px;margin-top:2px}
+  .prow .amt{font-weight:700;color:var(--cyan-d);font-size:15px;white-space:nowrap;text-align:right}
+  .note-box{background:rgba(224,164,59,.1);border:1px solid rgba(224,164,59,.35);border-radius:10px;padding:14px 16px;font-size:13.5px;color:#7a5a1e;margin:20px 0}
+  .msgr-row{text-align:center;margin-top:8px}
+  .btn.messenger{background:#0084ff;color:#fff}
+  .btn.messenger:hover{background:#006fd6;color:#fff}
+  footer{background:var(--navy);color:#9fb6cc;padding:40px 0;text-align:center;font-size:14px}
+  footer .brand{justify-content:center;color:#fff;margin-bottom:14px}
+  footer a{color:var(--cyan);text-decoration:none}
+  .fcontact{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:center;margin:12px 0}
+  @media(max-width:820px){.hero-grid{grid-template-columns:1fr;text-align:center}.hero p{margin-left:auto;margin-right:auto}.portrait-wrap{margin-top:30px}.triad-grid{grid-template-columns:1fr}}
+  @media(max-width:560px){.fgrid{grid-template-columns:1fr}.btn.ghost{margin-left:0;margin-top:12px}.nav .brand small{display:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="brand"><span class="mark">▞</span><div>Dave's Hand<small>Design · Estimate · Build</small></div></div>
+    <a href="#start" class="cta">Start Your Project</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="tag">Professional Drafting · Surigao &amp; Beyond</span>
+      <h1>Your dream home, drawn by a professional.</h1>
+      <div class="triad">DESIGN &nbsp;|&nbsp; ESTIMATE &nbsp;|&nbsp; BUILD</div>
+      <p>From first concept to signed-and-sealed, permit-ready plans — clear scope, honest pricing, and drawings you can actually build from.</p>
+      <a href="#start" class="btn">Book a Consultation</a>
+      <a href="#services" class="btn ghost">See Services</a>
+    </div>
+    <div class="portrait-wrap">
+      <div class="portrait"><img src="assets/dave.jpg" alt="Dave Salar, Draftsman"></div>
+      <div class="namecard"><b>Dave Salar</b><span>Draftsman &amp; Builder</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="trust">
+  <div class="wrap">
+    <span>✏️ <b>CAD</b> &amp; hand drafting</span>
+    <span>📐 <b>Permit-ready</b> drawings</span>
+    <span>🏛️ <b>Signed &amp; sealed</b> coordination</span>
+    <span>📍 Serving <b>nearby towns &amp; provinces</b></span>
+  </div>
+</div>
+
+<!-- TRIAD BAND -->
+<div class="band">
+  <div class="wrap">
+    <div class="eyebrow">One Point Person, Three Stages</div>
+    <h2 class="sec-title">Design. Estimate. Build.</h2>
+    <p class="sec-sub">Most clients only need a plan at first — but when you're ready to cost it out and break ground, I'm already here.</p>
+    <div class="triad-grid">
+      <div class="tcard">
+        <div class="ph"><img src="assets/design.jpg" alt="Hand drafting"><span>Design</span></div>
+        <div class="tx"><h3>Draw your home</h3><p>Concept to complete plans — hand drafting and CAD, done to professional standard.</p></div>
+      </div>
+      <div class="tcard">
+        <div class="ph"><img src="assets/estimate.jpg" alt="CAD plans and estimate"><span>Estimate</span></div>
+        <div class="tx"><h3>Know the cost</h3><p>Detailed estimates and BOQ so you know what your build truly costs before you start.</p></div>
+      </div>
+      <div class="tcard">
+        <div class="ph"><img src="assets/build.jpg" alt="Project coordination"><span>Build</span></div>
+        <div class="tx"><h3>Bring it to life</h3><p>Permit coordination and build support — one person managing the whole journey: me.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services" style="background:#fff;border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="eyebrow">What I Offer</div>
+    <h2 class="sec-title">Services built around your project</h2>
+    <p class="sec-sub">Every service has a clear scope and a defined deliverable. Pick where you are — I'll take it from there.</p>
+    <div class="grid">
+      <div class="card"><span class="chip">Start here</span><div class="ic">💬</div><h3>Design Consultation</h3><p>A focused session to turn your ideas, lot, and budget into a real direction. Your fee is credited toward any plan package if you proceed.</p></div>
+      <div class="card"><div class="ic">✏️</div><h3>Concept Design</h3><p>Floor plan, elevation, and perspective — so you can see and feel the home before committing to a full set.</p></div>
+      <div class="card"><div class="ic">📐</div><h3>Complete House Plans</h3><p>A full working set for bungalow or two-storey homes — architectural drawings ready for construction.</p></div>
+      <div class="card"><div class="ic">🏛️</div><h3>Signed &amp; Sealed Plans</h3><p>Complete plans signed and sealed by licensed professionals — ready for official submission and financing.</p></div>
+      <div class="card"><div class="ic">📋</div><h3>Building Permit Package</h3><p>I coordinate structural analysis, the professional sign-and-seal, and permit processing — you deal with one point person: me.</p></div>
+      <div class="card"><div class="ic">🧮</div><h3>Cost Estimate / BOQ</h3><p>A detailed bill of quantities and cost estimate so you know what your build will truly cost before breaking ground.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="how">
+  <div class="wrap">
+    <div class="eyebrow">Simple Process</div>
+    <h2 class="sec-title">How we work together</h2>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><h3>Submit your project</h3><p>Fill out the short intake form below. It tells me what you need and where you are.</p></div>
+      <div class="step"><div class="n">2</div><h3>Book a consultation</h3><p>We align on scope, timeline, and your exact quote — tailored to your town and project.</p></div>
+      <div class="step"><div class="n">3</div><h3>Design &amp; deliver</h3><p>You receive PDFs, printed sheets, and CAD files — professional, permit-ready output.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="start">
+  <div class="wrap">
+    <div class="eyebrow">Let's Begin</div>
+    <h2 class="sec-title">Tell me about your project</h2>
+    <p class="sec-sub">Pricing depends on your project and location, so I'll show you the full rate card right after you submit — then we set your exact quote in a consultation.</p>
+    <form class="formwrap" id="intakeForm" autocomplete="on">
+      <div class="fgrid">
+        <div class="field"><label>Full name <span class="req">*</span></label><input type="text" name="name" required placeholder="Juan Dela Cruz"></div>
+        <div class="field"><label>Messenger name or mobile no. <span class="req">*</span></label><input type="text" name="contact" required placeholder="FB name or 09xx xxx xxxx"></div>
+        <div class="field"><label>Town / Municipality <span class="req">*</span></label><input type="text" name="town" required placeholder="e.g. Carrascal, Surigao del Sur"></div>
+        <div class="field"><label>Province</label><input type="text" name="province" placeholder="e.g. Surigao del Sur"></div>
+        <div class="field"><label>What do you need? <span class="req">*</span></label>
+          <select name="service" required><option value="" selected disabled>Select a service</option><option>Design Consultation</option><option>Concept Design (plan, elevation, perspective)</option><option>Complete House Plans — Bungalow</option><option>Complete House Plans — Two-storey</option><option>Signed &amp; Sealed Plans</option><option>Building Permit Package</option><option>Cost Estimate / BOQ</option><option>Not sure yet — need advice</option></select>
+        </div>
+        <div class="field"><label>Project type</label>
+          <select name="ptype"><option value="" selected disabled>Select</option><option>Bungalow (1 storey)</option><option>Two-storey</option><option>Commercial</option><option>Renovation / revision of existing plan</option><option>Other</option></select>
+        </div>
+        <div class="field"><label>Lot area (approx.)</label><input type="text" name="lot" placeholder="e.g. 150 sqm"></div>
+        <div class="field"><label>Target budget range</label>
+          <select name="budget"><option value="" selected disabled>Select</option><option>Below ₱5,000</option><option>₱5,000 – ₱15,000</option><option>₱15,000 – ₱35,000</option><option>₱35,000 – ₱70,000</option><option>₱70,000+</option><option>Need guidance</option></select>
+        </div>
+        <div class="field full"><label>When do you want to start?</label>
+          <select name="timeline"><option value="" selected disabled>Select</option><option>As soon as possible</option><option>Within 1 month</option><option>1–3 months</option><option>Just exploring for now</option></select>
+        </div>
+        <div class="field full"><label>Project details</label><textarea name="details" placeholder="Number of bedrooms, special requests, references, questions — anything that helps me understand your dream home."></textarea></div>
+      </div>
+      <div class="submit-row"><button type="submit" class="btn block">Submit &amp; View Pricing →</button><p class="priv">No spam. Your details go straight to Dave. Submitting does not commit you to anything.</p></div>
+    </form>
+
+    <div id="reveal">
+      <div class="reveal-card">
+        <div class="reveal-head"><div class="check">✓</div><h2>Thank you, <span id="clientName">friend</span>!</h2><p>Here's my full rate card. Final quotes are confirmed in your consultation, since prices vary by town and scope.</p></div>
+        <div class="pricetable">
+          <div class="prow"><div class="svc">Design Consultation <small>Credited toward your package if you proceed</small></div><div class="amt">₱500 – ₱1,500</div></div>
+          <div class="prow"><div class="svc">Concept Design <small>Floor plan + elevation + perspective</small></div><div class="amt">₱3,000</div></div>
+          <div class="prow"><div class="svc">Complete House Plans — Bungalow <small>Full working set, no permit</small></div><div class="amt">₱10,000 – ₱15,000</div></div>
+          <div class="prow"><div class="svc">Complete House Plans — Two-storey <small>Full working set, no permit</small></div><div class="amt">₱30,000 – ₱35,000</div></div>
+          <div class="prow"><div class="svc">Signed &amp; Sealed — Bungalow</div><div class="amt">₱50,000</div></div>
+          <div class="prow"><div class="svc">Signed &amp; Sealed — Two-storey</div><div class="amt">₱70,000</div></div>
+          <div class="prow"><div class="svc">Building Permit Package <small>Professional fees + coordination</small></div><div class="amt">Prof. fees + ₱8,000–10,000</div></div>
+          <div class="prow"><div class="svc">Cost Estimate / BOQ</div><div class="amt">Quoted per project</div></div>
+        </div>
+        <div class="note-box">💡 <b>Smart move:</b> Start with a Design Consultation. Whatever you pay is credited toward your plan package when you proceed — so you lose nothing and get professional direction from day one.</div>
+        <div class="msgr-row"><a href="https://m.me/dave.salar.10" target="_blank" rel="noopener" class="btn messenger" id="msgrBtn">💬 Message Dave on Messenger</a><p class="priv">I'll also reach out to you using the contact details you provided.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand"><span class="mark">▞</span><div>Dave's Hand</div></div>
+    <p>Design · Estimate · Build — professional drafting from concept to permit-ready.</p>
+    <div class="fcontact"><span>📍 Carrascal, Surigao del Sur</span><span>💬 Messenger: <a href="https://m.me/dave.salar.10" target="_blank" rel="noopener">Dew Salar</a></span></div>
+    <p style="font-size:12px;margin-top:10px;color:#6f86a0">© 2026 Dave's Hand. Serving Surigao &amp; nearby provinces.</p>
+  </div>
+</footer>
+
+<script>
+  // ===== SETUP: paste your Formspree endpoint here (see README) =====
+  var FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID";
+  // =================================================================
+  var form=document.getElementById('intakeForm');
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var data=new FormData(form);
+    var name=(data.get('name')||'').trim();
+    document.getElementById('clientName').textContent=name.split(' ')[0]||'friend';
+
+    // Email the submission to Dave via Formspree (only if configured)
+    if(FORMSPREE_ENDPOINT.indexOf('YOUR_FORM_ID')===-1){
+      fetch(FORMSPREE_ENDPOINT,{
+        method:'POST',
+        body:data,
+        headers:{'Accept':'application/json'}
+      }).catch(function(){ /* fail silently; client still sees pricing */ });
+    }
+
+    // Always show the pricing reveal
+    form.style.display='none';
+    var reveal=document.getElementById('reveal');
+    reveal.style.display='block';
+    reveal.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+</script>
+</body>
+</html>
